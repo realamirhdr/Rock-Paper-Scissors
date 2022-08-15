@@ -23,34 +23,58 @@ function getPlayerChoice() {
 }
 
 function playRound(playerChoice, computerChoice) {
-    console.log(playerChoice);
-    console.log(computerChoice);
+    console.log(`Player chose ${playerChoice} and Computer chose ${computerChoice}`);
+    
     if (playerChoice == computerChoice) {
         return "Draw";
     } else {
         if (playerChoice == "paper") {
             if (computerChoice == "scissors") {
-                return "You lost, Scissors beat Paper! :)";
+                return "You lost";
             } else if (computerChoice == "rock") {
-                return "You win, Paper beats Rock! :)";
+                return "You win";
             }
         } else if (playerChoice == "scissors") {
             if (computerChoice == "paper") {
-                return "You won, Scissors beat Paper! :)";
+                return "You won";
             } else if (computerChoice == "rock") {
-                return "You lost, Rock beats Scissors! :)";
+                return "You lost";
             }
         } else if (playerChoice == "rock") {
             if (computerChoice == "paper") {
-                return "You lost, Paper beats Rock! :)";
+                return "You lost";
             } else if (computerChoice == "scissors") {
-                return "You win, Rock beats Scissors! :)";
+                return "You win";
             }
         }
     }
 }
 
-let playerChoice = getPlayerChoice();
-let computerChoice = getComputerChoice();
+function game() {
+    let computerScore = 0;
+    let playerScore = 0;
+    
+    for (let i = 0; i < 5; i++) {
+        if (playerScore > 2 || computerScore > 2) break;
+        let playerChoice = getPlayerChoice();
+        let computerChoice = getComputerChoice();
+        let result = playRound(playerChoice, computerChoice);
+        if (result == "You win") {
+            playerScore++;
+        } else if (result == "You lost") {
+            computerScore++;
+        } else {
+            i--;
+        }
+        console.log(`Computer: ${computerScore} | Player: ${playerScore}`);
+    }
+    if (playerScore > computerScore) {
+        return "Player";
+    } else {
+        return "Computer";
+    }
+}
 
-console.log(playRound(playerChoice, computerChoice));
+const winner = game();
+
+console.log(`${winner} is the winner! :)`)
